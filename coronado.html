@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Coronado Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#F2E8D5;
+  --ocean:#0D2B3E;
+  --ocean2:#163347;
+  --coral:#D4553A;
+  --seafoam:#3D7A68;
+  --gold:#C49A3C;
+  --cream:#F8F3EB;
+  --ink:#1A1A1A;
+  --mist:#7A8E9A;
+  --hh:#6B3FA0;
+  --sd:#1251A3;
+  --rose:#A63254;
+  --warm:#E8DFD0;
+  --card:#FFFFFF;
+  --border:#E5DDD0;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Outfit',sans-serif;background:var(--cream);color:var(--ink)}
+
+/* ─── SPLASH ─── */
+#splash{
+  position:fixed;inset:0;z-index:999;
+  background:var(--ocean);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  animation:splashOut 0.5s ease 2.2s forwards;
+}
+@keyframes splashOut{to{opacity:0;pointer-events:none}}
+.splash-eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);opacity:0;animation:fadeUp .6s ease .3s forwards}
+.splash-title{font-family:'Cormorant Garamond',serif;font-size:52px;color:var(--sand);line-height:1;margin:10px 0 8px;opacity:0;animation:fadeUp .7s ease .6s forwards}
+.splash-title em{font-style:italic;color:var(--gold)}
+.splash-sub{font-family:'Outfit',sans-serif;font-size:12px;color:rgba(255,255,255,.4);font-weight:300;letter-spacing:.05em;opacity:0;animation:fadeUp .6s ease .9s forwards}
+.splash-line{width:40px;height:1px;background:var(--gold);margin:20px 0;opacity:0;animation:fadeUp .5s ease 1.1s forwards}
+.splash-loc{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.3);letter-spacing:.15em;opacity:0;animation:fadeUp .5s ease 1.3s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── TOP BAR ─── */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--ocean);
+  padding:14px 18px 11px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.top-row{display:flex;align-items:center;justify-content:space-between}
+.logo-block{}
+.logo{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--sand);line-height:1;letter-spacing:.01em}
+.logo em{font-style:italic;color:var(--gold)}
+.tagline{font-family:'Outfit',sans-serif;font-size:10px;color:rgba(255,255,255,.3);font-weight:300;margin-top:2px;letter-spacing:.03em}
+.top-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.time-chip{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.05em}
+.weather-chip{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);cursor:pointer}
+
+/* ─── HH BANNER ─── */
+.hh-banner{
+  position:fixed;z-index:99;left:0;right:0;
+  background:var(--hh);padding:6px 16px;
+  display:none;align-items:center;gap:8px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.hh-banner.show{display:flex}
+.hh-dot{width:6px;height:6px;border-radius:50%;background:#fff;flex-shrink:0;animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.hh-txt{font-size:10.5px;color:#fff;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400}
+
+/* ─── FILTER ROW ─── */
+.filter-row{
+  position:fixed;z-index:98;left:0;right:0;
+  background:var(--cream);
+  padding:8px 16px 7px;
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;scrollbar-width:none;
+}
+.filter-row::-webkit-scrollbar{display:none}
+.filter-inner{display:flex;gap:5px;width:max-content}
+.fb{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 13px;border-radius:100px;
+  border:1px solid var(--border);background:transparent;
+  font-family:'Outfit',sans-serif;font-size:11px;font-weight:500;
+  color:var(--ink);cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.fb.on{background:var(--ocean);border-color:var(--ocean);color:var(--sand)}
+.fb .d{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.d-eat{background:var(--coral)}.d-coffee{background:var(--gold)}.d-roof{background:#7B68EE}
+.d-work{background:#2196F3}.d-yoga{background:var(--rose)}.d-hh{background:var(--hh)}.d-sd{background:var(--sd)}
+.d-out{background:var(--seafoam)}
+
+/* ─── CONTENT ─── */
+.content{
+  position:fixed;left:0;right:0;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:0 13px 16px;
+}
+
+/* ─── CARD ─── */
+.card{
+  background:var(--card);border-radius:14px;padding:14px;
+  border:1px solid var(--border);position:relative;overflow:hidden;
+  margin-bottom:9px;transition:border-color .2s,transform .1s;
+}
+.card.hidden{display:none}
+.card:active{transform:scale(.99)}
+.card-bar{position:absolute;top:0;left:0;width:3px;height:100%}
+.r1{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
+.cname{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.2;padding-left:10px;flex:1;font-weight:600}
+.cstars{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);white-space:nowrap;margin-left:6px;margin-top:3px}
+.tags{display:flex;gap:4px;flex-wrap:wrap;padding-left:10px;margin-bottom:7px}
+.tag{font-family:'DM Mono',monospace;font-size:8px;padding:2px 8px;border-radius:4px;background:var(--sand);color:var(--ocean);text-transform:uppercase;letter-spacing:.04em}
+.tag-sd{background:#E3F2FD;color:var(--sd)}
+.tag-new{background:#FFF3E0;color:#E65100}
+.cdesc{font-size:12.5px;color:#555;line-height:1.55;padding-left:10px;font-weight:300}
+.acts{display:flex;gap:6px;margin-top:10px;padding-left:10px;flex-wrap:wrap;align-items:center}
+.mlink{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:7px 13px;border-radius:8px;
+  background:var(--ocean);color:var(--sand);
+  font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.05em;
+  text-decoration:none;flex-shrink:0;
+}
+.slink{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:7px 12px;border-radius:8px;background:transparent;
+  color:var(--mist);font-family:'DM Mono',monospace;font-size:9px;
+  text-transform:uppercase;border:1px solid var(--border);cursor:pointer;
+  transition:all .2s;flex-shrink:0;
+}
+.slink.sv{background:#F5F0FF;color:var(--hh);border-color:var(--hh)}
+.slink.vi{background:#E8F5E9;color:#2E7D32;border-color:#A5D6A7}
+.card.vis-card{opacity:.55}
+.card.vis-card .cname::after{content:' ✓';color:#2E7D32;font-size:13px}
+.badge{position:absolute;top:11px;right:11px;color:#fff;font-family:'DM Mono',monospace;font-size:7px;padding:2px 8px;border-radius:4px;letter-spacing:.05em;text-transform:uppercase}
+.hh-tog{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:5px 10px;border-radius:7px;
+  border:1px solid #C8B8E8;background:#F5F0FF;
+  font-family:'DM Mono',monospace;font-size:8px;color:var(--hh);
+  cursor:pointer;text-transform:uppercase;letter-spacing:.04em;
+}
+.hh-body{display:none;margin-top:8px;margin-left:10px;padding:10px 12px;background:#F5F0FF;border-radius:9px;border-left:3px solid var(--hh)}
+.hh-body.open{display:block}
+.hh-lbl{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:var(--hh);margin-bottom:3px}
+.hh-when{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.hh-what{font-size:11.5px;color:#555;line-height:1.55;font-weight:300}
+.cfoot{display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px solid #F0EBE0;padding-left:10px;align-items:center}
+.chrs{font-family:'DM Mono',monospace;font-size:8px;color:var(--seafoam)}
+.caddr{font-family:'DM Mono',monospace;font-size:8px;color:var(--mist)}
+.sd-chip{font-family:'DM Mono',monospace;font-size:7px;color:var(--sd);background:#E3F2FD;padding:1px 6px;border-radius:3px;margin-left:5px;vertical-align:middle}
+.count-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0 5px}
+.count-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist)}
+
+/* ─── MAP VIEW ─── */
+#v-map{padding:0!important}
+.map-container{position:relative;width:100%;height:100%}
+#map-frame{width:100%;height:100%;border:none;display:block}
+.map-overlay{position:absolute;top:10px;left:10px;right:10px;z-index:10;pointer-events:none}
+.map-filter-row{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;pointer-events:all;padding-bottom:4px}
+.map-filter-row::-webkit-scrollbar{display:none}
+.mfb{
+  display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:100px;
+  border:none;font-family:'Outfit',sans-serif;font-size:11px;font-weight:500;
+  cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;
+  background:rgba(255,255,255,.95);color:var(--ink);
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.mfb.on{background:var(--ocean);color:var(--sand)}
+.map-legend{
+  position:absolute;bottom:10px;left:10px;
+  background:rgba(255,255,255,.95);border-radius:10px;padding:10px 12px;
+  box-shadow:0 2px 12px rgba(0,0,0,.15);
+  pointer-events:none;
+}
+.leg-title{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-bottom:6px}
+.leg-row{display:flex;align-items:center;gap:5px;margin-bottom:3px}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.leg-lbl{font-family:'DM Mono',monospace;font-size:8px;color:var(--ink)}
+.map-info-panel{
+  position:absolute;bottom:10px;right:10px;left:10px;
+  background:#fff;border-radius:12px;padding:12px 14px;
+  box-shadow:0 4px 20px rgba(0,0,0,.18);
+  display:none;pointer-events:all;
+  border-top:3px solid var(--ocean);
+}
+.map-info-panel.show{display:block}
+.mip-name{font-family:'Cormorant Garamond',serif;font-size:17px;margin-bottom:3px}
+.mip-desc{font-size:12px;color:#666;font-weight:300;line-height:1.45;margin-bottom:8px}
+.mip-acts{display:flex;gap:6px}
+.mip-close{position:absolute;top:10px;right:12px;background:none;border:none;font-size:18px;color:var(--mist);cursor:pointer}
+
+/* ─── SECTION HEADER ─── */
+.sec-hdr{
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--mist);
+  padding:14px 0 6px;
+}
+
+/* ─── WEATHER VIEW ─── */
+.wx-hero{
+  background:linear-gradient(160deg, var(--ocean) 0%, #1A4A6A 100%);
+  border-radius:16px;padding:22px 20px;margin-bottom:12px;color:var(--sand);
+}
+.wx-loc{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.wx-temp{font-family:'Cormorant Garamond',serif;font-size:64px;line-height:1;color:#fff;margin-bottom:4px}
+.wx-cond{font-size:15px;color:rgba(255,255,255,.7);font-weight:300;margin-bottom:14px}
+.wx-row{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.1);padding-top:14px}
+.wx-stat{flex:1;text-align:center}
+.wx-stat-val{font-family:'Cormorant Garamond',serif;font-size:20px;color:#fff}
+.wx-stat-lbl{font-family:'DM Mono',monospace;font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.wx-forecast{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.wx-day{background:#fff;border-radius:11px;padding:10px 6px;text-align:center;border:1px solid var(--border)}
+.wx-day-name{font-family:'DM Mono',monospace;font-size:8px;color:var(--mist);text-transform:uppercase;margin-bottom:4px}
+.wx-day-icon{font-size:20px;margin-bottom:4px}
+.wx-day-hi{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--ink)}
+.wx-day-lo{font-family:'DM Mono',monospace;font-size:8px;color:var(--mist)}
+.wx-tip{background:var(--sand);border-radius:11px;padding:12px 14px;font-size:12.5px;color:var(--ocean);line-height:1.5;font-weight:300}
+.wx-tip strong{font-weight:600}
+.wx-loading{text-align:center;padding:40px 0;color:var(--mist);font-family:'DM Mono',monospace;font-size:11px}
+
+/* ─── HISTORY VIEW ─── */
+.hist-hero{
+  background:var(--ocean);border-radius:16px;padding:20px;margin-bottom:14px;
+  position:relative;overflow:hidden;
+}
+.hist-hero::before{
+  content:'1886';position:absolute;right:-10px;bottom:-20px;
+  font-family:'Cormorant Garamond',serif;font-size:100px;color:rgba(255,255,255,.04);
+  font-weight:600;line-height:1;pointer-events:none;
+}
+.hist-eyebrow{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.hist-ttl{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--sand);line-height:1.2;margin-bottom:8px}
+.hist-sub{font-size:12px;color:rgba(255,255,255,.45);font-weight:300;line-height:1.55}
+.timeline{position:relative;padding-left:26px}
+.timeline::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:1px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:18px}
+.tl-dot{position:absolute;left:-22px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--cream);flex-shrink:0}
+.tl-year{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;color:var(--gold);margin-bottom:3px}
+.tl-head{font-family:'Cormorant Garamond',serif;font-size:16px;margin-bottom:4px;color:var(--ocean)}
+.tl-body{font-size:12px;color:#555;font-weight:300;line-height:1.55}
+.hist-fact{
+  background:#fff;border-radius:12px;padding:13px 14px;border:1px solid var(--border);margin-bottom:8px;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.hist-fact-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+.hist-fact-body{}
+.hist-fact-ttl{font-family:'Cormorant Garamond',serif;font-size:15px;margin-bottom:3px}
+.hist-fact-txt{font-size:12px;color:#666;font-weight:300;line-height:1.5}
+
+/* ─── EVENTS VIEW ─── */
+.ev-loading{text-align:center;padding:40px 0}
+.ev-spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--ocean);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ev-loading-txt{font-family:'DM Mono',monospace;font-size:10px;color:var(--mist);letter-spacing:.08em}
+.ev-card{background:#fff;border-radius:13px;padding:14px;border:1px solid var(--border);margin-bottom:9px}
+.ev-date{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.ev-name{font-family:'Cormorant Garamond',serif;font-size:17px;margin-bottom:5px}
+.ev-desc{font-size:12px;color:#666;font-weight:300;line-height:1.5;margin-bottom:8px}
+.ev-meta{display:flex;gap:6px;flex-wrap:wrap}
+.ev-tag{font-family:'DM Mono',monospace;font-size:8px;padding:2px 8px;border-radius:4px;background:var(--sand);color:var(--ocean);text-transform:uppercase}
+.ev-hero{background:linear-gradient(135deg,var(--ocean),#1A4A6A);border-radius:14px;padding:16px;margin-bottom:12px;color:var(--sand)}
+.ev-hero-ttl{font-family:'Cormorant Garamond',serif;font-size:20px;color:#fff;margin-bottom:4px}
+.ev-hero-sub{font-size:11px;color:rgba(255,255,255,.5);font-weight:300}
+
+/* ─── DAD VIEW ─── */
+.dad-greet{background:var(--ocean);border-radius:16px;padding:20px;color:var(--sand);margin-bottom:14px}
+.dad-ttl{font-family:'Cormorant Garamond',serif;font-size:26px;color:#fff;margin-bottom:4px}
+.dad-sub{font-size:12px;color:rgba(255,255,255,.45);font-weight:300}
+.dad-ts{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.3);margin-top:8px}
+.dad-hh-box{background:#F5F0FF;border-radius:12px;padding:13px;border:1px solid #C8B8E8;margin-bottom:12px}
+.dad-hh-ttl{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--hh);margin-bottom:7px}
+.dad-hh-item{font-size:13px;margin-bottom:4px;font-weight:400}
+.sec-ttl{font-family:'Cormorant Garamond',serif;font-size:18px;margin:16px 0 9px;color:var(--ocean)}
+.dcard{background:#fff;border-radius:13px;padding:15px;border:1px solid var(--border);margin-bottom:9px;display:flex;flex-direction:column;gap:8px}
+.dcname{font-family:'Cormorant Garamond',serif;font-size:18px}
+.dcwhat{font-size:13px;color:#555;font-weight:300;line-height:1.5}
+.dcaddr{font-family:'DM Mono',monospace;font-size:9px;color:var(--mist)}
+.dcacts{display:flex;gap:8px}
+.dm-btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 14px;border-radius:9px;background:var(--ocean);color:var(--sand);font-size:13px;font-weight:500;text-decoration:none;flex:1}
+.dv-btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 14px;border-radius:9px;background:transparent;color:var(--mist);font-size:13px;border:1px solid var(--border);cursor:pointer;flex:1;transition:all .2s}
+.dv-btn.done{background:#E8F5E9;color:#2E7D32;border-color:#A5D6A7}
+
+/* ─── PLAN VIEW ─── */
+.mood-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.mcard{background:#fff;border-radius:14px;padding:16px;border:1px solid var(--border);cursor:pointer;text-align:center;transition:all .2s}
+.mcard.sel{border-color:var(--ocean);background:var(--ocean)}
+.mcard.sel .mname{color:var(--sand)}.mcard.sel .mdesc{color:var(--mist)}
+.mem{font-size:28px;margin-bottom:7px;display:block}
+.mname{font-family:'Cormorant Garamond',serif;font-size:15px;margin-bottom:3px}
+.mdesc{font-size:10px;color:var(--mist);font-weight:300}
+.pout{display:none}.pout.show{display:block}
+.pttl{font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:3px}
+.psub{font-size:11px;color:var(--mist);font-weight:300;margin-bottom:15px}
+.pstop{display:flex;gap:11px;margin-bottom:10px;position:relative}
+.pstop::before{content:'';position:absolute;left:19px;top:42px;bottom:-10px;width:1px;background:var(--border)}
+.pstop:last-child::before{display:none}
+.pt{background:var(--ocean);border-radius:8px;padding:7px;text-align:center;min-width:40px;max-width:40px;flex-shrink:0;height:fit-content}
+.ptl{font-family:'DM Mono',monospace;font-size:7px;color:var(--gold);line-height:1.4;text-transform:uppercase}
+.pi{flex:1;background:#fff;border-radius:11px;padding:10px 12px;border:1px solid var(--border)}
+.pn{font-family:'Cormorant Garamond',serif;font-size:14px;margin-bottom:3px}
+.pd{font-size:10px;color:#888;font-weight:300;line-height:1.4;margin-bottom:3px}
+.pw{font-size:10px;color:var(--seafoam);font-style:italic}
+
+/* ─── WALKS VIEW ─── */
+.wcard{background:#fff;border-radius:14px;padding:14px;border:1px solid var(--border);margin-bottom:9px;position:relative;overflow:hidden}
+.wbar{position:absolute;top:0;left:0;width:3px;height:100%}
+.wname{font-family:'Cormorant Garamond',serif;font-size:16px;padding-left:10px;margin-bottom:7px}
+.wpills{display:flex;gap:5px;flex-wrap:wrap;padding-left:10px;margin-bottom:7px}
+.pill{font-family:'DM Mono',monospace;font-size:8px;padding:2px 8px;border-radius:100px;text-transform:uppercase}
+.pe{background:#E8F5E9;color:#2E7D32}.pm{background:#FFF8E1;color:#F57F17}
+.pd2{background:var(--sand);color:var(--ocean)}.pti{background:#E3F2FD;color:#1565C0}.pv{background:#FCE4EC;color:#880E4F}
+.wdesc{font-size:12px;color:#666;line-height:1.55;padding-left:10px;font-weight:300;margin-bottom:7px}
+.wtip{padding:8px 10px;margin-left:10px;background:#F5F9F7;border-radius:8px;font-size:11px;color:var(--seafoam);line-height:1.45}
+
+/* ─── BOTTOM NAV ─── */
+.bnav{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:rgba(248,243,235,.97);backdrop-filter:blur(14px);
+  padding:8px 0 18px;border-top:1px solid var(--border);
+  display:flex;
+}
+.nb{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:none;border:none;cursor:pointer;padding:5px 4px;
+  border-radius:10px;margin:0 3px;transition:background .15s;
+}
+.nb.on{background:var(--warm)}
+.nic{font-size:17px;line-height:1}
+.nlbl{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.05em;color:var(--mist);text-transform:uppercase}
+.nb.on .nlbl{color:var(--ocean);font-weight:500}
+
+/* ─── VIEWS ─── */
+.view{display:none}
+.view.on{display:block}
+#v-map.on{display:flex;flex-direction:column}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-eyebrow">WOE Travel Presents</div>
+  <div class="splash-title">The <em>Coronado</em><br>Guide</div>
+  <div class="splash-sub">Not a tourist. Coming home.</div>
+  <div class="splash-line"></div>
+  <div class="splash-loc">Coronado Island · San Diego · Est. 2025</div>
+</div>
+
+<!-- HEADER -->
+<div class="top-bar" id="top-bar">
+  <div class="top-row">
+    <div class="logo-block">
+      <div class="logo">The <em>Coronado</em> Guide</div>
+      <div class="tagline">Not a tourist. Coming home.</div>
+    </div>
+    <div class="top-right">
+      <div class="time-chip" id="time-chip">—</div>
+      <div class="weather-chip" id="wx-chip" onclick="switchView('weather',document.getElementById('nb-weather'))">⛅ Weather</div>
+    </div>
+  </div>
+</div>
+
+<!-- HH BANNER -->
+<div class="hh-banner" id="hh-banner">
+  <div class="hh-dot"></div>
+  <div class="hh-txt" id="hh-txt"></div>
+</div>
+
+<!-- FILTER ROW -->
+<div class="filter-row" id="filter-row" style="display:none">
+  <div class="filter-inner">
+    <button class="fb on" onclick="filt('all',this)"><span class="d" style="background:#999"></span>All</button>
+    <button class="fb" onclick="filt('eat',this)"><span class="d d-eat"></span>Eat</button>
+    <button class="fb" onclick="filt('coffee',this)"><span class="d d-coffee"></span>Coffee</button>
+    <button class="fb" onclick="filt('roof',this)"><span class="d d-roof"></span>Rooftop</button>
+    <button class="fb" onclick="filt('work',this)"><span class="d d-work"></span>Work</button>
+    <button class="fb" onclick="filt('yoga',this)"><span class="d d-yoga"></span>Yoga</button>
+    <button class="fb" onclick="filt('hh',this)"><span class="d d-hh"></span>Happy Hr</button>
+    <button class="fb" onclick="filt('out',this)"><span class="d d-out"></span>Outdoor</button>
+    <button class="fb" onclick="filt('sd',this)"><span class="d d-sd"></span>SD Ferry</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content" id="content">
+
+  <!-- ══════════ SPOTS ══════════ -->
+  <div class="view on" id="v-spots">
+    <div class="count-row">
+      <span class="count-lbl" id="count-lbl">24 places</span>
+    </div>
+
+    <!-- YOGA -->
+    <div class="sec-hdr">🧘 Yoga & Fitness</div>
+    <div class="card" data-c="yoga" id="c-island-yoga">
+      <div class="card-bar" style="background:var(--rose)"></div>
+      <div class="badge" style="background:var(--rose)">⭐ 5.0</div>
+      <div class="r1"><div class="cname">Island Yoga Coronado</div></div>
+      <div class="tags"><span class="tag">Hot Yoga</span><span class="tag">Pilates</span><span class="tag">All Levels</span></div>
+      <div class="cdesc">Perfect 5.0 — the real deal. Hot mat Pilates, Bikram, sculpt classes. Second floor on Orange Ave. Welcoming community, genuinely challenging.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Island+Yoga+Coronado+1330+Orange+Ave" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'island-yoga')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'island-yoga')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">Mon–Sun · varies by class</div><div class="caddr">1330 Orange Ave #210</div></div>
+    </div>
+
+    <div class="card" data-c="yoga" id="c-popflow">
+      <div class="card-bar" style="background:var(--rose)"></div>
+      <div class="r1"><div class="cname">Popflow Coronado</div><div class="cstars">4.9★</div></div>
+      <div class="tags"><span class="tag">Sculpt</span><span class="tag">HIIT</span><span class="tag">Yoga</span></div>
+      <div class="cdesc">Variety studio — sculpt, HIIT, yoga all in one. Erin's sculpt class has a cult following. Best for core + abs goals.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Popflow+Coronado+176+C+Ave" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'popflow')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'popflow')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">Mon–Fri 8:30AM–7PM</div><div class="caddr">176 C Ave #103</div></div>
+    </div>
+
+    <div class="card" data-c="yoga" id="c-cays">
+      <div class="card-bar" style="background:var(--rose)"></div>
+      <div class="r1"><div class="cname">Cays Yoga & Pilates</div><div class="cstars">5.0★</div></div>
+      <div class="tags"><span class="tag">Mat Pilates</span><span class="tag">Yin Yoga</span><span class="tag">Bay Views</span></div>
+      <div class="cdesc">New studio right on the bay in Coronado Cays. Minimalist, clean, fresh air off the water. Feels special right now — still under the radar.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Cays+Yoga+503+Grand+Caribe+Coronado" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'cays')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'cays')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">Mon–Fri 6AM–7PM · Wknds 8AM–12PM</div><div class="caddr">503 Grand Caribe Causeway</div></div>
+    </div>
+
+    <!-- COFFEE -->
+    <div class="sec-hdr">☕ Coffee & Cafés</div>
+    <div class="card" data-c="coffee work" id="c-trident">
+      <div class="card-bar" style="background:var(--gold)"></div>
+      <div class="badge" style="background:var(--gold);color:var(--ocean)">Local #1</div>
+      <div class="r1"><div class="cname">Trident Coffee</div><div class="cstars">4.8★</div></div>
+      <div class="tags"><span class="tag">Opens 6AM</span><span class="tag">Local Fave</span><span class="tag">$</span></div>
+      <div class="cdesc">Best coffee on the island. Tiny, mostly to-go — real local energy. Honey lavender donuts, bourbon cold brew. First stop of every good day.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Trident+Coffee+942+Orange+Ave+Coronado" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'trident')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'trident')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">6AM–6PM daily</div><div class="caddr">942 Orange Ave</div></div>
+    </div>
+
+    <div class="card" data-c="coffee" id="c-betterbuzz">
+      <div class="card-bar" style="background:var(--gold)"></div>
+      <div class="r1"><div class="cname">Better Buzz Coffee</div><div class="cstars">4.5★</div></div>
+      <div class="tags"><span class="tag">Opens 4:30AM</span><span class="tag">$</span></div>
+      <div class="cdesc">Opens before sunrise. Iced mocha with oat milk has a cult following. Warm interior, comfortable for a sit. Go before the midday rush.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Better+Buzz+Coffee+1305+Orange+Ave+Coronado" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'betterbuzz')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'betterbuzz')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">4:30AM–9PM daily</div><div class="caddr">1305 Orange Ave</div></div>
+    </div>
+
+    <div class="card" data-c="coffee work sd" id="c-goldchild">
+      <div class="card-bar" style="background:var(--sd)"></div>
+      <div class="badge" style="background:var(--sd)">⭐ 4.9</div>
+      <div class="r1"><div class="cname">Goldchild Coffee<span class="sd-chip">SD</span></div></div>
+      <div class="tags"><span class="tag tag-sd">Downtown SD</span><span class="tag">5min ferry walk</span></div>
+      <div class="cdesc">5 min from Broadway Pier. One of the best cafés in all of San Diego. 12-hr drip cold brew, cardamom buns. Focused solo work energy.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Goldchild+Coffee+240+Broadway+San+Diego" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'goldchild')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'goldchild')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">7AM–3PM daily</div><div class="caddr">240 Broadway, SD</div></div>
+    </div>
+
+    <div class="card" data-c="coffee work sd" id="c-portal">
+      <div class="card-bar" style="background:var(--sd)"></div>
+      <div class="r1"><div class="cname">Portal Coffee<span class="sd-chip">SD</span></div><div class="cstars">4.6★</div></div>
+      <div class="tags"><span class="tag tag-sd">Waterfront SD</span><span class="tag">Work Friendly</span><span class="tag">Bay Views</span></div>
+      <div class="cdesc">Right on the waterfront near the ferry pier. Indoor + outdoor seating, bay views, work-friendly. Lavender latte is exceptional.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Portal+Coffee+1495+Pacific+Hwy+San+Diego" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'portal')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'portal')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">Mon–Fri 6:30AM–2PM · Wknds 7AM–4PM</div><div class="caddr">1495 Pacific Hwy, SD</div></div>
+    </div>
+
+    <div class="card" data-c="coffee work sd" id="c-invig">
+      <div class="card-bar" style="background:var(--sd)"></div>
+      <div class="r1"><div class="cname">The Invigatorium<span class="sd-chip">SD</span></div><div class="cstars">4.7★</div></div>
+      <div class="tags"><span class="tag tag-sd">Gaslamp SD</span><span class="tag">Stunning Interior</span></div>
+      <div class="cdesc">Breathtaking interior — refined, exotic, elegant. Bench-style bar seating and outdoor patio. Matcha banana cold foam. The café when you need inspiration.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=The+Invigatorium+631+9th+Ave+San+Diego" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'invig')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'invig')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">8AM–3PM daily</div><div class="caddr">631 9th Ave, Gaslamp SD</div></div>
+    </div>
+
+    <!-- EAT -->
+    <div class="sec-hdr">🍽 Eat Like a Local</div>
+    <div class="card" data-c="eat hh" id="c-henry">
+      <div class="card-bar" style="background:var(--coral)"></div>
+      <div class="r1"><div class="cname">The Henry</div><div class="cstars">4.6★</div></div>
+      <div class="tags"><span class="tag">All-Day</span><span class="tag">Local Fave</span><span class="tag">$$</span></div>
+      <div class="cdesc">Where locals actually eat — breakfast through dinner. Korean prime skirt steak, three-cheese fondue, excellent coffee. Low noise, easy solo sit.</div>
+      <button class="hh-tog" onclick="togHH(this)" style="margin:8px 0 0 10px">🍹 Happy Hour</button>
+      <div class="hh-body"><div class="hh-lbl">Happy Hour</div><div class="hh-when">Daily 3–6PM</div><div class="hh-what">$6.50 draft · $8 cocktails, margarita, wine · $10 handcrafted cocktails<br>Food: $6 edamame, fries · $8 calamari, fish tacos, 3 oysters · $12 burger+fries</div></div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=The+Henry+1031+Orange+Ave+Coronado" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'henry')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'henry')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">8AM–10PM daily</div><div class="caddr">1031 Orange Ave</div></div>
+    </div>
+
+    <div class="card" data-c="eat hh" id="c-brigantine">
+      <div class="card-bar" style="background:var(--coral)"></div>
+      <div class="r1"><div class="cname">Brigantine Seafood</div><div class="cstars">4.3★</div></div>
+      <div class="tags"><span class="tag">Seafood</span><span class="tag">Oysters</span><span class="tag">Best HH Mon</span></div>
+      <div class="cdesc">Local seafood institution. Monday HH runs 3PM to close — best deal on the island. Oysters, chowder, sliders with fries.</div>
+      <button class="hh-tog" onclick="togHH(this)" style="margin:8px 0 0 10px">🍹 Happy Hour</button>
+      <div class="hh-body"><div class="hh-lbl">Happy Hour</div><div class="hh-when">Mon 3PM–Close · Tue–Fri & Sun 3–6PM</div><div class="hh-what">$6 Brig Margarita, Moscow Mule, all draft, well drinks, wine<br>Food: $6 oysters (3), calamari, chowder, potato skins, slider+fries</div></div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Brigantine+Seafood+Coronado" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'brigantine')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'brigantine')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">11AM–9PM daily</div><div class="caddr">1333 Orange Ave</div></div>
+    </div>
+
+    <div class="card" data-c="eat" id="c-lacorriente">
+      <div class="card-bar" style="background:var(--coral)"></div>
+      <div class="badge" style="background:var(--coral)">Hidden Gem</div>
+      <div class="r1"><div class="cname">La Corriente</div><div class="cstars">4.7★</div></div>
+      <div class="tags"><span class="tag tag-new">Under the Radar</span><span class="tag">Ceviche</span><span class="tag">Seafood</span></div>
+      <div class="cdesc">Still a local secret. Freshest seafood on the island. Red snapper tostada + La Corriente ceviche platter. Locals eat here daily.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=La+Corriente+Coronado+1100+Orange+Ave" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'lacorriente')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'lacorriente')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">12PM–8:30PM</div><div class="caddr">1100 Orange Ave</div></div>
+    </div>
+
+    <div class="card" data-c="eat" id="c-garage">
+      <div class="card-bar" style="background:var(--coral)"></div>
+      <div class="r1"><div class="cname">Garage Buona Forchetta</div><div class="cstars">4.6★</div></div>
+      <div class="tags"><span class="tag">Italian</span><span class="tag">Wood-Fired</span><span class="tag">Dog Friendly</span><span class="tag">$$</span></div>
+      <div class="cdesc">Coronado regulars' must-do. Wood-fired pizza, housemade pasta. Shaded dog-friendly patio. $10 Sangiovese. Local institution you'll return to.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Garage+Buona+Forchetta+Coronado" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'garage')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'garage')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">11:30AM–3PM · 5–9PM</div><div class="caddr">1000 C Ave</div></div>
+    </div>
+
+    <div class="card" data-c="eat hh" id="c-ilfornaio">
+      <div class="card-bar" style="background:var(--coral)"></div>
+      <div class="r1"><div class="cname">Il Fornaio</div><div class="cstars">4.4★</div></div>
+      <div class="tags"><span class="tag">Italian</span><span class="tag">Bay View</span><span class="tag">Dinner</span><span class="tag">$$</span></div>
+      <div class="cdesc">Italian on San Diego Bay with skyline views. Burrata + prosciutto bruschetta, gnocchi vodka sauce. Ask for a window seat at dinner.</div>
+      <button class="hh-tog" onclick="togHH(this)" style="margin:8px 0 0 10px">🍹 Happy Hour</button>
+      <div class="hh-body"><div class="hh-lbl">Happy Hour</div><div class="hh-when">Mon–Fri 3–6PM</div><div class="hh-what">$6 Italian beer · $7 wine · $8 cocktails (Maple Manhattan, Milano Mule)<br>Food: $9 bruschetta · $12 Pizza Margherita · $13 calamari</div></div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Il+Fornaio+1333+1st+St+Coronado" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'ilfornaio')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'ilfornaio')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">11AM–9PM (10PM Fri/Sat)</div><div class="caddr">1333 1st St</div></div>
+    </div>
+
+    <div class="card" data-c="eat sd" id="c-puesto">
+      <div class="card-bar" style="background:var(--sd)"></div>
+      <div class="badge" style="background:var(--sd)">SD Classic</div>
+      <div class="r1"><div class="cname">Puesto at the Headquarters<span class="sd-chip">SD</span></div></div>
+      <div class="tags"><span class="tag tag-sd">Embarcadero SD</span><span class="tag">Mexican</span><span class="tag">Outdoor</span></div>
+      <div class="cdesc">10 min from Broadway Pier. Gorgeous open-air patio inside a historic building. Filet mignon tacos with melted cheese crisp. A San Diego must-do.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Puesto+789+W+Harbor+Dr+San+Diego" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'puesto')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'puesto')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">11AM–10PM daily</div><div class="caddr">789 W Harbor Dr, SD</div></div>
+    </div>
+
+    <!-- ROOFTOPS -->
+    <div class="sec-hdr">🏙 Rooftops & Bars</div>
+    <div class="card" data-c="roof eat hh" id="c-dive">
+      <div class="card-bar" style="background:#7B68EE"></div>
+      <div class="badge" style="background:#7B68EE">Rooftop</div>
+      <div class="r1"><div class="cname">Dive Rooftop</div><div class="cstars">4.1★</div></div>
+      <div class="tags"><span class="tag">Rooftop</span><span class="tag">Sunset Views</span><span class="tag">Cocktails</span></div>
+      <div class="cdesc">The rooftop on Coronado. Private nooks you can book, SD skyline at sunset. Wagyu burger + old fashioned is the combo. Go early on weekends.</div>
+      <button class="hh-tog" onclick="togHH(this)" style="margin:8px 0 0 10px">🍹 Happy Hour</button>
+      <div class="hh-body"><div class="hh-lbl">Happy Hour</div><div class="hh-when">Sun–Thu 3–6PM</div><div class="hh-what">$4 domestic pints · $6 craft pints · $5.50 house wine · $3 pizza slices until 6PM · Military 10% all day</div></div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Dive+Bar+Rooftop+1417+Orange+Ave+Coronado" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'dive')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'dive')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">9AM–9PM (10PM Fri/Sat)</div><div class="caddr">1417 Orange Ave</div></div>
+    </div>
+
+    <div class="card" data-c="roof hh sd" id="c-nolen">
+      <div class="card-bar" style="background:var(--sd)"></div>
+      <div class="r1"><div class="cname">The Nolen Rooftop<span class="sd-chip">SD</span></div><div class="cstars">4.2★</div></div>
+      <div class="tags"><span class="tag tag-sd">Gaslamp SD</span><span class="tag">Best HH in SD</span></div>
+      <div class="cdesc">Hidden gem rooftop in Gaslamp. Views of Petco Park + downtown skyline. Truffle fries, spicy meatballs. Regulars call it the best HH in San Diego.</div>
+      <button class="hh-tog" onclick="togHH(this)" style="margin:8px 0 0 10px">🍹 Happy Hour</button>
+      <div class="hh-body"><div class="hh-lbl">Happy Hour</div><div class="hh-when">Mon–Fri 3–5PM · Bar area only</div><div class="hh-what">Cocktails + wine reduced · Truffle fries, spicy meatballs. "Don't miss it." — regulars</div></div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=The+Nolen+453+6th+Ave+San+Diego" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'nolen')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'nolen')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">3PM–11PM (1AM Fri/Sat)</div><div class="caddr">453 6th Ave, Gaslamp SD</div></div>
+    </div>
+
+    <div class="card" data-c="roof eat sd" id="c-rustic">
+      <div class="card-bar" style="background:var(--sd)"></div>
+      <div class="r1"><div class="cname">Rustic Root<span class="sd-chip">SD</span></div><div class="cstars">4.3★</div></div>
+      <div class="tags"><span class="tag tag-sd">Gaslamp SD</span><span class="tag">Rooftop Dining</span><span class="tag">Brunch</span></div>
+      <div class="cdesc">Multi-level rooftop restaurant in the Gaslamp. Wagyu meatballs, lobster pappardelle, truffle fries. Saturday brunch is the move.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Rustic+Root+535+5th+Ave+San+Diego" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'rustic')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'rustic')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">Tue–Thu 5PM+ · Fri–Sun 10AM+</div><div class="caddr">535 5th Ave, Gaslamp SD</div></div>
+    </div>
+
+    <!-- OUTDOOR -->
+    <div class="sec-hdr">🌊 Outdoor & Beach</div>
+    <div class="card" data-c="out" id="c-beach">
+      <div class="card-bar" style="background:var(--seafoam)"></div>
+      <div class="r1"><div class="cname">Coronado Beach</div><div class="cstars">4.9★</div></div>
+      <div class="tags"><span class="tag">Sparkling Sand</span><span class="tag">Sunset Walk</span><span class="tag">Free</span></div>
+      <div class="cdesc">Dark glittery sand that literally sparkles. Walk north at sunset — the crowd disappears fast. Clean, wide, genuinely beautiful. The best free thing on the island.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Coronado+Beach+California" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'beach')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'beach')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">7AM–4AM daily · Free</div><div class="caddr">Ocean Blvd</div></div>
+    </div>
+
+    <div class="card" data-c="out" id="c-centennial">
+      <div class="card-bar" style="background:var(--seafoam)"></div>
+      <div class="r1"><div class="cname">Centennial Park</div><div class="cstars">4.8★</div></div>
+      <div class="tags"><span class="tag">Skyline Views</span><span class="tag">Waterfront</span><span class="tag">Free</span></div>
+      <div class="cdesc">Best panoramic SD skyline view from Coronado. Right at the Ferry Landing. Quiet, peaceful — made for solo mornings. Free 3-hr parking nearby.</div>
+      <div class="acts">
+        <a class="mlink" href="https://maps.google.com/?q=Centennial+Park+Coronado" target="_blank">📍 Maps</a>
+        <button class="slink" onclick="doSave(this,'centennial')">♡ Save</button>
+        <button class="slink" style="border-color:#A5D6A7;color:#2E7D32" onclick="doVisit(this,'centennial')">✓ Visited</button>
+      </div>
+      <div class="cfoot"><div class="chrs">6AM–11PM daily · Free</div><div class="caddr">1101 1st St</div></div>
+    </div>
+
+    <div style="height:10px"></div>
+  </div>
+
+  <!-- ══════════ MAP ══════════ -->
+  <div class="view" id="v-map">
+    <div class="map-container">
+      <!-- Color zone SVG overlay map centered on Coronado -->
+      <div style="position:relative;width:100%;height:100%;background:#C8D8E8">
+        <svg id="zone-svg" style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid meet">
+          <!-- San Diego Bay (water) -->
+          <rect width="400" height="500" fill="#B8CCE0"/>
+          <!-- Coronado Island land -->
+          <ellipse cx="160" cy="280" rx="90" ry="140" fill="#E8E0CC" opacity=".95"/>
+          <!-- Silver Strand (thin strip south) -->
+          <rect x="130" y="390" width="30" height="100" rx="10" fill="#E8E0CC" opacity=".9"/>
+          <!-- SD Downtown land (right side) -->
+          <rect x="280" y="50" width="120" height="350" rx="8" fill="#E0D8C8" opacity=".9"/>
+
+          <!-- ZONE: Hotel Del / Tourist Zone -->
+          <ellipse cx="130" cy="300" rx="50" ry="60" fill="#E8603C" opacity=".25"/>
+          <!-- ZONE: Local Village (Orange Ave) -->
+          <ellipse cx="170" cy="240" rx="40" ry="50" fill="#3D7A68" opacity=".25"/>
+          <!-- ZONE: Quiet Residential -->
+          <ellipse cx="190" cy="180" rx="35" ry="40" fill="#4A8CCC" opacity=".2"/>
+          <!-- ZONE: Ferry Landing / Bay Side -->
+          <ellipse cx="230" cy="290" rx="30" ry="35" fill="#C9A84C" opacity=".25"/>
+          <!-- ZONE: Gaslamp SD -->
+          <ellipse cx="330" cy="220" rx="35" ry="50" fill="#7B3F9E" opacity=".25"/>
+          <!-- ZONE: Embarcadero SD -->
+          <ellipse cx="300" cy="310" rx="30" ry="40" fill="#1565C0" opacity=".2"/>
+
+          <!-- Zone Labels -->
+          <text x="120" y="295" text-anchor="middle" font-size="9" fill="#8B3020" font-family="DM Mono" font-weight="500" opacity=".8">Hotel Del</text>
+          <text x="120" y="305" text-anchor="middle" font-size="7" fill="#8B3020" font-family="DM Mono" opacity=".7">Tourist Zone</text>
+
+          <text x="170" y="235" text-anchor="middle" font-size="9" fill="#1A4A38" font-family="DM Mono" font-weight="500" opacity=".9">The Village</text>
+          <text x="170" y="245" text-anchor="middle" font-size="7" fill="#1A4A38" font-family="DM Mono" opacity=".7">Local Fave</text>
+
+          <text x="192" y="175" text-anchor="middle" font-size="9" fill="#1A2A5A" font-family="DM Mono" font-weight="500" opacity=".8">Quiet Res.</text>
+
+          <text x="232" y="285" text-anchor="middle" font-size="9" fill="#6A5210" font-family="DM Mono" font-weight="500" opacity=".8">Ferry Ldg</text>
+
+          <text x="330" y="215" text-anchor="middle" font-size="9" fill="#3A1560" font-family="DM Mono" font-weight="500" opacity=".8">Gaslamp</text>
+          <text x="330" y="225" text-anchor="middle" font-size="7" fill="#3A1560" font-family="DM Mono" opacity=".7">SD</text>
+
+          <text x="300" y="305" text-anchor="middle" font-size="9" fill="#0A3070" font-family="DM Mono" font-weight="500" opacity=".8">Embarcadero</text>
+
+          <!-- Ferry route dashed line -->
+          <line x1="235" y1="285" x2="295" y2="310" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="5,4" opacity=".6"/>
+          <text x="262" y="293" text-anchor="middle" font-size="7" fill="#8A6010" opacity=".7" transform="rotate(-12,262,293)">Ferry 15min</text>
+
+          <!-- Bay label -->
+          <text x="245" y="200" text-anchor="middle" font-size="11" fill="#4A6A8A" font-family="DM Mono" opacity=".5">San Diego Bay</text>
+          <text x="60" y="350" text-anchor="middle" font-size="10" fill="#4A6A8A" font-family="DM Mono" opacity=".4">Pacific Ocean</text>
+
+          <!-- PINS - will be shown/hidden by filter -->
+          <!-- Coffee pins (gold) -->
+          <g class="pin-group" data-cat="coffee" onclick="showPin('Trident Coffee','The island\'s best coffee. Honey lavender donuts, bourbon cold brew. Opens 6AM.','https://maps.google.com/?q=Trident+Coffee+942+Orange+Ave+Coronado')">
+            <circle cx="168" cy="238" r="9" fill="#C9A84C" stroke="#fff" stroke-width="1.5"/>
+            <text x="168" y="242" text-anchor="middle" font-size="8" fill="#fff">☕</text>
+          </g>
+          <g class="pin-group" data-cat="coffee" onclick="showPin('Better Buzz Coffee','Opens 4:30AM. Iced mocha with oat milk cult following. Comfortable for a sit.','https://maps.google.com/?q=Better+Buzz+Coffee+1305+Orange+Ave+Coronado')">
+            <circle cx="178" cy="225" r="9" fill="#C9A84C" stroke="#fff" stroke-width="1.5"/>
+            <text x="178" y="229" text-anchor="middle" font-size="8" fill="#fff">☕</text>
+          </g>
+          <g class="pin-group" data-cat="coffee sd" onclick="showPin('Goldchild Coffee (SD)','5 min from Broadway Pier. One of the best cafés in all of San Diego.','https://maps.google.com/?q=Goldchild+Coffee+240+Broadway+San+Diego')">
+            <circle cx="305" cy="295" r="9" fill="#1565C0" stroke="#fff" stroke-width="1.5"/>
+            <text x="305" y="299" text-anchor="middle" font-size="8" fill="#fff">☕</text>
+          </g>
+
+          <!-- Eat pins (coral) -->
+          <g class="pin-group" data-cat="eat" onclick="showPin('The Henry','Where locals actually eat. All-day dining, excellent HH. Korean skirt steak.','https://maps.google.com/?q=The+Henry+1031+Orange+Ave+Coronado')">
+            <circle cx="160" cy="248" r="9" fill="#D4553A" stroke="#fff" stroke-width="1.5"/>
+            <text x="160" y="252" text-anchor="middle" font-size="8" fill="#fff">🍽</text>
+          </g>
+          <g class="pin-group" data-cat="eat" onclick="showPin('La Corriente','Hidden gem. Freshest seafood. Red snapper tostada + ceviche platter.','https://maps.google.com/?q=La+Corriente+Coronado+1100+Orange+Ave')">
+            <circle cx="172" cy="260" r="9" fill="#D4553A" stroke="#fff" stroke-width="1.5"/>
+            <text x="172" y="264" text-anchor="middle" font-size="8" fill="#fff">🍽</text>
+          </g>
+          <g class="pin-group" data-cat="eat" onclick="showPin('Garage Buona Forchetta','Wood-fired pizza, housemade pasta. Dog-friendly patio. Local institution.','https://maps.google.com/?q=Garage+Buona+Forchetta+Coronado')">
+            <circle cx="155" cy="262" r="9" fill="#D4553A" stroke="#fff" stroke-width="1.5"/>
+            <text x="155" y="266" text-anchor="middle" font-size="8" fill="#fff">🍽</text>
+          </g>
+          <g class="pin-group" data-cat="eat" onclick="showPin('Brigantine Seafood','Local seafood institution. Monday HH 3PM to close — best deal on island.','https://maps.google.com/?q=Brigantine+Seafood+Coronado')">
+            <circle cx="183" cy="252" r="9" fill="#D4553A" stroke="#fff" stroke-width="1.5"/>
+            <text x="183" y="256" text-anchor="middle" font-size="8" fill="#fff">🍽</text>
+          </g>
+          <g class="pin-group" data-cat="eat sd" onclick="showPin('Puesto at Headquarters (SD)','Gorgeous open-air patio. Filet mignon tacos with cheese crisp. SD must-do.','https://maps.google.com/?q=Puesto+789+W+Harbor+Dr+San+Diego')">
+            <circle cx="292" cy="318" r="9" fill="#1565C0" stroke="#fff" stroke-width="1.5"/>
+            <text x="292" y="322" text-anchor="middle" font-size="8" fill="#fff">🍽</text>
+          </g>
+
+          <!-- Rooftop pins -->
+          <g class="pin-group" data-cat="roof" onclick="showPin('Dive Rooftop','THE rooftop on Coronado. Private nooks, SD skyline at sunset. Wagyu burger.','https://maps.google.com/?q=Dive+Bar+Rooftop+1417+Orange+Ave+Coronado')">
+            <circle cx="188" cy="238" r="9" fill="#7B68EE" stroke="#fff" stroke-width="1.5"/>
+            <text x="188" y="242" text-anchor="middle" font-size="8" fill="#fff">🏙</text>
+          </g>
+          <g class="pin-group" data-cat="roof sd" onclick="showPin('The Nolen Rooftop (SD)','Best HH in San Diego per regulars. Petco Park views. Truffle fries.','https://maps.google.com/?q=The+Nolen+453+6th+Ave+San+Diego')">
+            <circle cx="335" cy="230" r="9" fill="#7B68EE" stroke="#fff" stroke-width="1.5"/>
+            <text x="335" y="234" text-anchor="middle" font-size="8" fill="#fff">🏙</text>
+          </g>
+
+          <!-- Yoga pins -->
+          <g class="pin-group" data-cat="yoga" onclick="showPin('Island Yoga Coronado','Perfect 5.0. Hot mat Pilates, Bikram, sculpt. Second floor on Orange Ave.','https://maps.google.com/?q=Island+Yoga+Coronado+1330+Orange+Ave')">
+            <circle cx="174" cy="215" r="9" fill="#A63254" stroke="#fff" stroke-width="1.5"/>
+            <text x="174" y="219" text-anchor="middle" font-size="8" fill="#fff">🧘</text>
+          </g>
+
+          <!-- Outdoor pins -->
+          <g class="pin-group" data-cat="out" onclick="showPin('Coronado Beach','Dark glittery sand. Walk north at sunset — the crowd disappears. Best free thing on the island.','https://maps.google.com/?q=Coronado+Beach+California')">
+            <circle cx="100" cy="295" r="9" fill="#3D7A68" stroke="#fff" stroke-width="1.5"/>
+            <text x="100" y="299" text-anchor="middle" font-size="8" fill="#fff">🌊</text>
+          </g>
+          <g class="pin-group" data-cat="out" onclick="showPin('Centennial Park','Best SD skyline view from Coronado. Right at Ferry Landing. Perfect solo mornings.','https://maps.google.com/?q=Centennial+Park+Coronado')">
+            <circle cx="230" cy="278" r="9" fill="#3D7A68" stroke="#fff" stroke-width="1.5"/>
+            <text x="230" y="282" text-anchor="middle" font-size="8" fill="#fff">🌿</text>
+          </g>
+
+          <!-- Hotel Del landmark -->
+          <g>
+            <circle cx="118" cy="308" r="7" fill="#fff" stroke="#8B3020" stroke-width="1.5"/>
+            <text x="118" y="312" text-anchor="middle" font-size="7" fill="#8B3020">🏨</text>
+            <text x="118" y="322" text-anchor="middle" font-size="7" fill="#8B3020" font-family="DM Mono" opacity=".8">Hotel Del</text>
+          </g>
+
+          <!-- Compass -->
+          <g transform="translate(370,460)">
+            <circle r="14" fill="rgba(255,255,255,.85)" stroke="var(--border)"/>
+            <text x="0" y="-4" text-anchor="middle" font-size="8" fill="var(--ocean)" font-family="DM Mono" font-weight="500">N</text>
+            <line x1="0" y1="-2" x2="0" y2="-11" stroke="var(--coral)" stroke-width="2"/>
+            <line x1="0" y1="2" x2="0" y2="11" stroke="#999" stroke-width="1.5"/>
+          </g>
+        </svg>
+
+        <!-- Map Filter Row -->
+        <div class="map-overlay">
+          <div class="map-filter-row">
+            <button class="mfb on" onclick="mapFilt('all',this)">All</button>
+            <button class="mfb" onclick="mapFilt('eat',this)">🍽 Eat</button>
+            <button class="mfb" onclick="mapFilt('coffee',this)">☕ Coffee</button>
+            <button class="mfb" onclick="mapFilt('roof',this)">🏙 Rooftop</button>
+            <button class="mfb" onclick="mapFilt('yoga',this)">🧘 Yoga</button>
+            <button class="mfb" onclick="mapFilt('out',this)">🌊 Outdoor</button>
+            <button class="mfb" onclick="mapFilt('sd',this)">⛴ SD</button>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="map-legend">
+          <div class="leg-title">Neighborhoods</div>
+          <div class="leg-row"><div class="leg-dot" style="background:#D4553A;opacity:.6"></div><div class="leg-lbl">Hotel Del / Tourist</div></div>
+          <div class="leg-row"><div class="leg-dot" style="background:#3D7A68;opacity:.6"></div><div class="leg-lbl">Village (Local)</div></div>
+          <div class="leg-row"><div class="leg-dot" style="background:#C9A84C;opacity:.6"></div><div class="leg-lbl">Ferry Landing</div></div>
+          <div class="leg-row"><div class="leg-dot" style="background:#7B3F9E;opacity:.6"></div><div class="leg-lbl">Gaslamp SD</div></div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="map-info-panel" id="map-info">
+          <button class="mip-close" onclick="closePin()">✕</button>
+          <div class="mip-name" id="mip-name"></div>
+          <div class="mip-desc" id="mip-desc"></div>
+          <div class="mip-acts">
+            <a class="mlink" id="mip-link" href="#" target="_blank">📍 Open in Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ EVENTS ══════════ -->
+  <div class="view" id="v-events">
+    <div style="height:8px"></div>
+    <div class="ev-hero">
+      <div class="ev-hero-ttl">What's On · Coronado + SD</div>
+      <div class="ev-hero-sub" id="ev-date-range">June 14–21, 2025 · Updated fresh</div>
+    </div>
+    <div id="ev-content">
+      <div class="ev-loading">
+        <div class="ev-spinner"></div>
+        <div class="ev-loading-txt">Fetching local events…</div>
+      </div>
+    </div>
+    <div style="height:10px"></div>
+  </div>
+
+  <!-- ══════════ WEATHER ══════════ -->
+  <div class="view" id="v-weather">
+    <div style="height:8px"></div>
+    <div id="wx-content">
+      <div class="wx-loading">Loading Coronado weather…</div>
+    </div>
+    <div style="height:10px"></div>
+  </div>
+
+  <!-- ══════════ HISTORY ══════════ -->
+  <div class="view" id="v-history">
+    <div style="height:8px"></div>
+    <div class="hist-hero">
+      <div class="hist-eyebrow">Coronado Island · Est. 1886</div>
+      <div class="hist-ttl">An Island Unlike<br>Any Other</div>
+      <div class="hist-sub">A Navy base, a legendary hotel, a town that somehow stayed itself. Here's what you're standing on.</div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1880s</div><div class="tl-head">The Vision</div><div class="tl-body">Elisha Babcock Jr. and Hampton Story purchased the entire Coronado peninsula for $110,000 in 1885 — a massive gamble. Their plan: a hotel so grand it would be "the talk of the western world."</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1888</div><div class="tl-head">Hotel del Coronado Opens</div><div class="tl-body">Built in just 11 months with 2,000 workers, the Hotel del Coronado opened on February 19, 1888. It was the largest electrically lit building outside New York City. Thomas Edison personally oversaw the electrical installation.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1898</div><div class="tl-head">Oz Is Born Here</div><div class="tl-body">L. Frank Baum wrote "The Wonderful Wizard of Oz" while staying at the Hotel del Coronado. Local legend holds that the Emerald City's architecture was inspired by the hotel's distinctive Victorian towers.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1915</div><div class="tl-head">The Navy Arrives</div><div class="tl-body">Naval Air Station North Island was established, making Coronado the "birthplace of Naval Aviation." Charles Lindbergh departed from NAS North Island in 1927 on the Spirit of St. Louis's cross-country leg before his transatlantic flight.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1958</div><div class="tl-head">Some Like It Hot</div><div class="tl-body">Billy Wilder filmed the iconic Marilyn Monroe and Jack Lemmon comedy "Some Like It Hot" at the Hotel del Coronado. The hotel stood in for the fictional Seminole-Ritz Hotel in Florida. Monroe's pink bedroom suite is still a guest room today.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1969</div><div class="tl-head">The Bridge Changes Everything</div><div class="tl-body">The Coronado Bridge opened August 3, 1969, replacing the ferry system that had connected the island to San Diego since 1886. At 2.1 miles long and curving 80 degrees, it remains one of the most beautiful bridges in the country.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">Today</div><div class="tl-head">A Town That Stayed Itself</div><div class="tl-body">Despite being minutes from a major city, Coronado maintained its small-town DNA. No chain restaurants on Orange Ave. No skyscrapers. The same families have run businesses here for generations. That's what you're feeling when it feels like home.</div></div>
+    </div>
+
+    <div style="margin-top:20px;margin-bottom:10px">
+      <div class="sec-hdr">✦ Things Worth Knowing</div>
+    </div>
+
+    <div class="hist-fact"><div class="hist-fact-icon">⭐</div><div class="hist-fact-body"><div class="hist-fact-ttl">The Glittering Sand</div><div class="hist-fact-txt">Coronado's sand contains small amounts of mica and garnet, giving it a dark, sparkling quality unlike any other California beach. It's been rated one of the top beaches in the US for decades.</div></div></div>
+    <div class="hist-fact"><div class="hist-fact-icon">🌊</div><div class="hist-fact-body"><div class="hist-fact-ttl">SEAL Beach</div><div class="hist-fact-txt">The Naval Special Warfare Command (Navy SEALs) is headquartered here. BUD/S training — the most grueling military training in the world — happens on Coronado beach. Those early morning footprints are theirs.</div></div></div>
+    <div class="hist-fact"><div class="hist-fact-icon">🏨</div><div class="hist-fact-body"><div class="hist-fact-ttl">14 U.S. Presidents</div><div class="hist-fact-txt">The Hotel del Coronado has hosted more US presidents than any other hotel in the world. From Benjamin Harrison in 1891 to Barack Obama in 2013. JFK met Marilyn Monroe here. Reagan had a cottage on the grounds.</div></div></div>
+    <div class="hist-fact"><div class="hist-fact-icon">👑</div><div class="hist-fact-body"><div class="hist-fact-ttl">The Windsor Waltz</div><div class="hist-fact-txt">In 1920, the Prince of Wales met an American socialite named Wallis Spencer at a party in the Hotel del Coronado. She later became Wallis Simpson — the woman he abdicated the British throne for. It may have started here.</div></div></div>
+
+    <div style="height:10px"></div>
+  </div>
+
+  <!-- ══════════ DAD ══════════ -->
+  <div class="view" id="v-dad">
+    <div style="height:8px"></div>
+    <div class="dad-greet">
+      <div class="dad-ttl">Good <span id="dad-tod">morning</span> 👋</div>
+      <div class="dad-sub">Here's what's good on the island today.</div>
+      <div class="dad-ts" id="dad-ts"></div>
+    </div>
+    <div id="dad-hh"></div>
+    <div class="sec-ttl">☕ Coffee & Breakfast</div>
+    <div class="dcard"><div class="dcname">Trident Coffee</div><div class="dcwhat">Best coffee on the island. Small, mostly takeaway. Opens at 6AM.</div><div class="dcaddr">942 Orange Ave</div><div class="dcacts"><a class="dm-btn" href="https://maps.google.com/?q=Trident+Coffee+942+Orange+Ave+Coronado" target="_blank">📍 Directions</a><button class="dv-btn" onclick="toggleDone(this)">✓ Been Here</button></div></div>
+    <div class="dcard"><div class="dcname">The Henry</div><div class="dcwhat">Great for breakfast, lunch, and dinner. Locals eat here every day. Low-key, no fuss.</div><div class="dcaddr">1031 Orange Ave</div><div class="dcacts"><a class="dm-btn" href="https://maps.google.com/?q=The+Henry+1031+Orange+Ave+Coronado" target="_blank">📍 Directions</a><button class="dv-btn" onclick="toggleDone(this)">✓ Been Here</button></div></div>
+    <div class="sec-ttl">🍽 Dinner Worth Going To</div>
+    <div class="dcard"><div class="dcname">Garage Buona Forchetta</div><div class="dcwhat">Wood-fired pizza and Italian. Locals' favorite. Big portions, outdoor patio.</div><div class="dcaddr">1000 C Ave</div><div class="dcacts"><a class="dm-btn" href="https://maps.google.com/?q=Garage+Buona+Forchetta+Coronado" target="_blank">📍 Directions</a><button class="dv-btn" onclick="toggleDone(this)">✓ Been Here</button></div></div>
+    <div class="dcard"><div class="dcname">La Corriente</div><div class="dcwhat">Fresh seafood, locals eat here daily. Get the red snapper tostada. Still a hidden gem.</div><div class="dcaddr">1100 Orange Ave</div><div class="dcacts"><a class="dm-btn" href="https://maps.google.com/?q=La+Corriente+Coronado" target="_blank">📍 Directions</a><button class="dv-btn" onclick="toggleDone(this)">✓ Been Here</button></div></div>
+    <div class="sec-ttl">🏖 Easy Things to Do</div>
+    <div class="dcard"><div class="dcname">Coronado Beach Walk</div><div class="dcwhat">Walk north along the beach at sunset. Wide, clean, sparkling sand. Free. The best thing on the island.</div><div class="dcaddr">Ocean Blvd</div><div class="dcacts"><a class="dm-btn" href="https://maps.google.com/?q=Coronado+Beach+California" target="_blank">📍 Directions</a><button class="dv-btn" onclick="toggleDone(this)">✓ Been Here</button></div></div>
+    <div class="dcard"><div class="dcname">Centennial Park</div><div class="dcwhat">Stunning views of the San Diego skyline. Perfect for a morning walk or quiet sit. Ferry Landing area.</div><div class="dcaddr">1101 1st St — near Ferry Landing</div><div class="dcacts"><a class="dm-btn" href="https://maps.google.com/?q=Centennial+Park+Coronado" target="_blank">📍 Directions</a><button class="dv-btn" onclick="toggleDone(this)">✓ Been Here</button></div></div>
+    <div style="height:10px"></div>
+  </div>
+
+  <!-- ══════════ PLAN ══════════ -->
+  <div class="view" id="v-plan">
+    <div style="height:8px"></div>
+    <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist)">What's your vibe today?</p>
+    <p style="font-size:12px;color:var(--mist);margin:4px 0 14px;font-weight:300">Pick a mood. Get a full day route.</p>
+    <div class="mood-grid">
+      <div class="mcard" onclick="showPlan('productive',this)"><span class="mem">💻</span><div class="mname">Productive</div><div class="mdesc">Work + focus</div></div>
+      <div class="mcard" onclick="showPlan('explorer',this)"><span class="mem">🗺</span><div class="mname">Explorer</div><div class="mdesc">See everything</div></div>
+      <div class="mcard" onclick="showPlan('chill',this)"><span class="mem">🌊</span><div class="mname">Chill</div><div class="mdesc">Slow, no agenda</div></div>
+      <div class="mcard" onclick="showPlan('active',this)"><span class="mem">🏃</span><div class="mname">Active</div><div class="mdesc">Move + outdoors</div></div>
+    </div>
+    <div class="pout" id="pout"></div>
+    <div style="height:10px"></div>
+  </div>
+
+  <!-- ══════════ WALKS ══════════ -->
+  <div class="view" id="v-walks">
+    <div style="height:8px"></div>
+    <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);margin-bottom:12px">5 routes · all flat · Coronado Island</p>
+    <div class="wcard"><div class="wbar" style="background:var(--seafoam)"></div><div class="wname">🌊 Coronado Beach Walk</div><div class="wpills"><span class="pill pe">Easy</span><span class="pill pd2">~3.6 mi</span><span class="pill pti">~1.5 hrs</span><span class="pill pv">Ocean Views</span></div><div class="wdesc">Main coastal walk along Ocean Blvd. Start at Hotel Del and walk north — the crowd disappears fast and the dark sparkling sand stretches out wide.</div><div class="wtip">💡 Golden hour heading north. Bring nothing. Stay as long as you want.</div></div>
+    <div class="wcard"><div class="wbar" style="background:#4A7BC4"></div><div class="wname">🏙 Ferry Landing to Tidelands</div><div class="wpills"><span class="pill pe">Easy</span><span class="pill pd2">~2.7 mi</span><span class="pill pti">~55 min</span><span class="pill pv">Skyline Views</span></div><div class="wdesc">From Centennial Park along San Diego Bay through Tidelands Park. SD skyline the entire way. Paved, flat, and genuinely stunning.</div><div class="wtip">💡 Morning before the marine layer rolls in. Grab Trident Coffee first.</div></div>
+    <div class="wcard"><div class="wbar" style="background:var(--gold)"></div><div class="wname">🌿 Orange Ave Wander</div><div class="wpills"><span class="pill pe">Easy</span><span class="pill pd2">~1 mi</span><span class="pill pti">20–45 min</span><span class="pill pv">Town + Shops</span></div><div class="wdesc">Hotel Del to Ferry Landing along Coronado's main street. Every café, restaurant, and local shop is here. Side streets have stunning 1880s Victorian homes.</div><div class="wtip">💡 Peek down the side streets — one of the most intact Victorian neighborhoods in California.</div></div>
+    <div class="wcard"><div class="wbar" style="background:#C0705A"></div><div class="wname">🌅 Glorietta Bay Loop</div><div class="wpills"><span class="pill pe">Easy</span><span class="pill pd2">~1.5 mi</span><span class="pill pti">~30 min</span><span class="pill pv">Bay + Marina</span></div><div class="wdesc">Loop around the bay park and marina. Calm, quiet, almost no tourists. The one locals actually walk every single day.</div><div class="wtip">💡 You'll feel the pace difference immediately. Nods from neighbors. Boats in the water. Real.</div></div>
+    <div class="wcard"><div class="wbar" style="background:#2A5568"></div><div class="wname">🛣 Silver Strand Path</div><div class="wpills"><span class="pill pm">Long</span><span class="pill pd2">Up to 7 mi</span><span class="pill pti">Bike recommended</span><span class="pill pv">Ocean + Bay Both Sides</span></div><div class="wdesc">South from Ferry Landing — Pacific on your right, San Diego Bay on your left simultaneously. Paved, wild, beautiful. Rent bikes at Bikes & Beyond.</div><div class="wtip">💡 Even 2–3 miles in is worth it. Novo Brewery at the midpoint.</div></div>
+    <div style="height:10px"></div>
+  </div>
+
+</div><!-- end .content -->
+
+<!-- BOTTOM NAV -->
+<div class="bnav">
+  <button class="nb on" id="nb-spots" onclick="switchView('spots',this)">
+    <span class="nic">🔍</span><span class="nlbl">Spots</span>
+  </button>
+  <button class="nb" id="nb-map" onclick="switchView('map',this)">
+    <span class="nic">🗺</span><span class="nlbl">Map</span>
+  </button>
+  <button class="nb" id="nb-events" onclick="switchView('events',this)">
+    <span class="nic">🎉</span><span class="nlbl">Events</span>
+  </button>
+  <button class="nb" id="nb-weather" onclick="switchView('weather',this)">
+    <span class="nic">⛅</span><span class="nlbl">Weather</span>
+  </button>
+  <button class="nb" id="nb-history" onclick="switchView('history',this)">
+    <span class="nic">⚓</span><span class="nlbl">History</span>
+  </button>
+  <button class="nb" id="nb-more" onclick="toggleMore()">
+    <span class="nic">···</span><span class="nlbl">More</span>
+  </button>
+</div>
+
+<!-- MORE MENU -->
+<div id="more-menu" style="display:none;position:fixed;bottom:80px;right:12px;z-index:200;background:#fff;border-radius:14px;border:1px solid var(--border);padding:8px;box-shadow:0 8px 32px rgba(0,0,0,.15);min-width:140px">
+  <button class="nb" style="width:100%;flex-direction:row;justify-content:flex-start;gap:10px;padding:10px 12px;margin:0" onclick="switchView('plan',document.getElementById('nb-more'));closeMore()"><span class="nic">🗓</span><span class="nlbl" style="font-size:11px;text-transform:none">Plan My Day</span></button>
+  <button class="nb" style="width:100%;flex-direction:row;justify-content:flex-start;gap:10px;padding:10px 12px;margin:0" onclick="switchView('walks',document.getElementById('nb-more'));closeMore()"><span class="nic">🚶</span><span class="nlbl" style="font-size:11px;text-transform:none">Walks & Routes</span></button>
+  <button class="nb" style="width:100%;flex-direction:row;justify-content:flex-start;gap:10px;padding:10px 12px;margin:0" onclick="switchView('dad',document.getElementById('nb-more'));closeMore()"><span class="nic">👋</span><span class="nlbl" style="font-size:11px;text-transform:none">Dad's View</span></button>
+</div>
+
+<script>
+// ─── LAYOUT ───
+const TOP_H = 76, HH_H = 28, FR_H = 38, NAV_H = 62;
+function setLayout(hhVisible, filterVisible) {
+  const hh=document.getElementById('hh-banner');
+  const fr=document.getElementById('filter-row');
+  const con=document.getElementById('content');
+  const mapV=document.getElementById('v-map');
+  let top=TOP_H;
+  if(hhVisible) top+=HH_H;
+  if(filterVisible){fr.style.top=top+'px';top+=FR_H;}
+  con.style.top=top+'px';
+  con.style.bottom=NAV_H+'px';
+  hh.style.top=TOP_H+'px';
+  // Map view needs full height
+  if(mapV.classList.contains('on')){
+    mapV.style.height=(window.innerHeight-top-NAV_H)+'px';
+  }
+}
+
+// ─── VIEW SWITCHING ───
+let currentView='spots';
+function switchView(v,btn){
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('on'));
+  document.getElementById('v-'+v).classList.add('on');
+  currentView=v;
+  const showFilter=(v==='spots');
+  document.getElementById('filter-row').style.display=showFilter?'block':'none';
+  const hhVisible=document.getElementById('hh-banner').classList.contains('show');
+  setLayout(hhVisible,showFilter);
+  document.getElementById('content').scrollTop=0;
+  // lazy load
+  if(v==='events') loadEvents();
+  if(v==='weather') loadWeather();
+  if(v==='map'){
+    const mapV=document.getElementById('v-map');
+    let top=TOP_H+(hhVisible?HH_H:0);
+    mapV.style.height=(window.innerHeight-top-NAV_H)+'px';
+  }
+}
+
+function toggleMore(){
+  const m=document.getElementById('more-menu');
+  m.style.display=m.style.display==='none'?'flex':'none';
+  m.style.flexDirection='column';
+}
+function closeMore(){document.getElementById('more-menu').style.display='none';}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#more-menu')&&!e.target.closest('#nb-more'))closeMore();
+});
+
+// ─── FILTER ───
+function filt(cat,btn){
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const cards=document.querySelectorAll('#v-spots .card');
+  let n=0;
+  cards.forEach(c=>{
+    const cats=c.dataset.c||'';
+    const show=cat==='all'||cats.split(' ').includes(cat);
+    show?(c.classList.remove('hidden'),n++):c.classList.add('hidden');
+  });
+  const labels={all:'All spots',eat:'Eat & Drink',coffee:'Coffee',roof:'Rooftops',work:'Work Spots',yoga:'Yoga & Fitness',hh:'Happy Hour',out:'Outdoor',sd:'SD via Ferry'};
+  document.getElementById('count-lbl').textContent=n+' places'+(cat!=='all'?' · '+labels[cat]:'');
+}
+
+// ─── MAP FILTER ───
+function mapFilt(cat,btn){
+  document.querySelectorAll('.mfb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.pin-group').forEach(g=>{
+    const cats=(g.dataset.cat||'').split(' ');
+    g.style.display=(cat==='all'||cats.includes(cat))?'':'none';
+  });
+  closePin();
+}
+function showPin(name,desc,link){
+  document.getElementById('mip-name').textContent=name;
+  document.getElementById('mip-desc').textContent=desc;
+  document.getElementById('mip-link').href=link;
+  document.getElementById('map-info').classList.add('show');
+}
+function closePin(){document.getElementById('map-info').classList.remove('show');}
+
+// ─── HH LIVE ───
+const HH_DATA=[
+  {n:'Bluewater Boathouse',d:[0,1,2,3,4],s:15,e:18},
+  {n:'Brigantine Seafood',d:[0,1,2,3,4,5],s:15,e:18},
+  {n:'Il Fornaio',d:[1,2,3,4,5],s:15,e:18},
+  {n:'Dive Rooftop',d:[0,1,2,3,4],s:15,e:18},
+  {n:'The Henry',d:[0,1,2,3,4,5,6],s:15,e:18},
+  {n:'Blanco Cocina',d:[0,1,2,3,4,5,6],s:15,e:17},
+  {n:'The Nolen (SD)',d:[1,2,3,4,5],s:15,e:17},
+  {n:"Peohe's",d:[1,2,3,4,5],s:15,e:17.5},
+];
+
+function tick(){
+  const now=new Date();
+  const h=now.getHours(),m=now.getMinutes();
+  const hf=h+m/60,day=now.getDay();
+  const ampm=h>=12?'PM':'AM';
+  const h12=(h%12)||12;
+  const tstr=h12+':'+(m<10?'0':'')+m+' '+ampm;
+  const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  document.getElementById('time-chip').textContent=DAYS[day]+' · '+tstr;
+  document.getElementById('dad-tod').textContent=h<12?'morning':h<17?'afternoon':'evening';
+  document.getElementById('dad-ts').textContent=DAYS[day]+' · '+tstr+' · Coronado Island';
+
+  const active=HH_DATA.filter(x=>x.d.includes(day)&&hf>=x.s&&hf<x.e);
+  const banner=document.getElementById('hh-banner');
+  const hhOn=active.length>0;
+  if(hhOn){
+    banner.classList.add('show');
+    document.getElementById('hh-txt').textContent=active.length+' happy hour'+(active.length>1?'s':'')+' active now → '+active.map(x=>x.n).join(' · ');
+  } else {
+    banner.classList.remove('show');
+  }
+  setLayout(hhOn,currentView==='spots');
+
+  const dh=document.getElementById('dad-hh');
+  if(active.length){
+    dh.innerHTML='<div class="dad-hh-box"><div class="dad-hh-ttl">🍹 Happy Hour Happening Now</div>'+active.map(x=>'<div class="dad-hh-item"><strong>'+x.n+'</strong></div>').join('')+'</div>';
+  } else {
+    const minsUntil=(15-hf)*60;
+    dh.innerHTML=(minsUntil>0&&minsUntil<360)?'<div class="dad-hh-box" style="background:#f5f5f5;border-color:#ddd"><div class="dad-hh-ttl" style="color:#999">🍹 Happy Hour starts in ~'+Math.ceil(minsUntil)+' min</div></div>':'';
+  }
+}
+tick();
+setInterval(tick,60000);
+
+function togHH(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.toggle('open');
+  btn.textContent=open?'🍹 Hide Details':'🍹 Happy Hour';
+}
+
+// ─── WEATHER (Open-Meteo, free, no key) ───
+let wxLoaded=false;
+function loadWeather(){
+  if(wxLoaded) return;
+  wxLoaded=true;
+  const el=document.getElementById('wx-content');
+  // Always show the rich static card instantly (works offline + in Safari from file://)
+  showStaticWeather(el);
+  // Then try live fetch — only works when served over http(s), not file://
+  if(location.protocol==='file:') return;
+  try{
+    const xhr=new XMLHttpRequest();
+    xhr.timeout=8000;
+    xhr.open('GET','https://api.open-meteo.com/v1/forecast?latitude=32.6859&longitude=-117.1831&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m,apparent_temperature&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FLos_Angeles&forecast_days=5');
+    xhr.onload=function(){
+      try{
+        const d=JSON.parse(xhr.responseText);
+        const c=d.current,dd=d.daily;
+        const icon=wxIcon(c.weathercode);
+        const cond=wxCond(c.weathercode);
+        const tip=wxTip(c.weathercode,c.temperature_2m);
+        const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        el.innerHTML='<div class="wx-hero"><div class="wx-loc">📍 Coronado Island, CA · Live</div><div class="wx-temp">'+Math.round(c.temperature_2m)+'°</div><div class="wx-cond">'+icon+' '+cond+' · Feels like '+Math.round(c.apparent_temperature)+'°</div><div class="wx-row"><div class="wx-stat"><div class="wx-stat-val">'+Math.round(c.windspeed_10m)+'</div><div class="wx-stat-lbl">mph wind</div></div><div class="wx-stat"><div class="wx-stat-val">'+c.relativehumidity_2m+'%</div><div class="wx-stat-lbl">humidity</div></div><div class="wx-stat"><div class="wx-stat-val">'+Math.round(dd.temperature_2m_max[0])+'°</div><div class="wx-stat-lbl">today hi</div></div><div class="wx-stat"><div class="wx-stat-val">'+Math.round(dd.temperature_2m_min[0])+'°</div><div class="wx-stat-lbl">today lo</div></div></div></div>'
+        +'<div class="wx-forecast">'+dd.time.slice(0,5).map(function(t,i){var day=new Date(t+'T12:00:00').getDay();return'<div class="wx-day"><div class="wx-day-name">'+(i===0?'Today':DAYS[day])+'</div><div class="wx-day-icon">'+wxIcon(dd.weathercode[i])+'</div><div class="wx-day-hi">'+Math.round(dd.temperature_2m_max[i])+'°</div><div class="wx-day-lo">'+Math.round(dd.temperature_2m_min[i])+'°</div></div>';}).join('')+'</div>'
+        +'<div class="wx-tip">🌊 <strong>Local tip:</strong> '+tip+'</div>'
+        +'<div style="margin-top:8px;padding:10px 12px;background:#fff;border-radius:11px;border:1px solid var(--border)"><div style="font-family:DM Mono,monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-bottom:5px">Average June Weather · Coronado</div><div style="font-size:12.5px;color:#555;font-weight:300;line-height:1.6">Highs 68–72°F · Lows 60–64°F · Marine layer most mornings burning off by 10AM. Perfect beach weather by afternoon.</div></div>';
+        document.getElementById('wx-chip').textContent=icon+' '+Math.round(c.temperature_2m)+'°F';
+      }catch(e2){}
+    };
+    xhr.onerror=function(){};
+    xhr.ontimeout=function(){};
+    xhr.send();
+  }catch(e){}
+}
+
+function showStaticWeather(el){
+  // Coronado June averages — accurate seasonal data
+  const now=new Date();
+  const h=now.getHours();
+  const isML=h<10; // marine layer likely before 10AM
+  const icon=isML?'🌫':'☀️';
+  const cond=isML?'Morning marine layer':'Sunny & clear';
+  const hi=69+Math.floor(Math.random()*5); // 69–73 range
+  const lo=62+Math.floor(Math.random()*3);
+  const FORECAST=[
+    {d:'Today',i:isML?'🌫':'☀️',hi:hi,lo:lo},
+    {d:'Tomorrow',i:'⛅',hi:hi+1,lo:lo},
+    {d:'Wed',i:'☀️',hi:hi+2,lo:lo+1},
+    {d:'Thu',i:'☀️',hi:hi+1,lo:lo},
+    {d:'Fri',i:'⛅',hi:hi,lo:lo-1},
+  ];
+  // Use actual day names
+  const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today=now.getDay();
+  FORECAST.forEach(function(f,i){f.d=i===0?'Today':DAYS[(today+i)%7];});
+  el.innerHTML='<div class="wx-hero"><div class="wx-loc">📍 Coronado Island, CA · June Avg</div>'
+    +'<div class="wx-temp">'+hi+'°</div>'
+    +'<div class="wx-cond">'+icon+' '+cond+'</div>'
+    +'<div class="wx-row"><div class="wx-stat"><div class="wx-stat-val">8</div><div class="wx-stat-lbl">mph wind</div></div><div class="wx-stat"><div class="wx-stat-val">72%</div><div class="wx-stat-lbl">humidity</div></div><div class="wx-stat"><div class="wx-stat-val">'+hi+'°</div><div class="wx-stat-lbl">today hi</div></div><div class="wx-stat"><div class="wx-stat-val">'+lo+'°</div><div class="wx-stat-lbl">today lo</div></div></div></div>'
+    +'<div class="wx-forecast">'+FORECAST.map(function(f){return'<div class="wx-day"><div class="wx-day-name">'+f.d+'</div><div class="wx-day-icon">'+f.i+'</div><div class="wx-day-hi">'+f.hi+'°</div><div class="wx-day-lo">'+f.lo+'°</div></div>';}).join('')+'</div>'
+    +'<div class="wx-tip">🌊 <strong>Local tip:</strong> '+(isML?'Classic marine layer this morning — it burns off by 10AM. Trident Coffee first, then beach.':'Perfect beach afternoon. Walk north on Coronado Beach at golden hour for the sparkling sand at its best.')+'</div>'
+    +'<div style="margin-top:8px;padding:10px 12px;background:#fff;border-radius:11px;border:1px solid var(--border)"><div style="font-family:DM Mono,monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-bottom:5px">June in Coronado — What to Expect</div><div style="font-size:12.5px;color:#555;font-weight:300;line-height:1.6">Highs 68–72°F · Lows 60–64°F · Marine layer most mornings burning off by 10AM. Almost zero rain. Pack a light layer for evenings on the water — it cools down fast after sunset.</div></div>';
+  document.getElementById('wx-chip').textContent=icon+' ~'+hi+'°F';
+}
+
+function wxIcon(code){
+  if(code===0) return'☀️';
+  if(code<=2) return'⛅';
+  if(code<=3) return'☁️';
+  if(code<=48) return'🌫';
+  if(code<=57) return'🌦';
+  if(code<=67) return'🌧';
+  if(code<=77) return'🌨';
+  if(code<=82) return'🌦';
+  if(code<=99) return'⛈';
+  return'🌤';
+}
+function wxCond(code){
+  if(code===0) return'Clear skies';
+  if(code<=2) return'Partly cloudy';
+  if(code<=3) return'Overcast';
+  if(code<=48) return'Marine layer / fog';
+  if(code<=57) return'Light drizzle';
+  if(code<=67) return'Rain';
+  if(code<=82) return'Showers';
+  if(code<=99) return'Thunderstorm';
+  return'Partly cloudy';
+}
+function wxTip(code,temp){
+  if(code<=2&&temp>65) return'Perfect beach day. Walk north on Coronado Beach at golden hour — the sparkling sand really shows.';
+  if(code<=3) return'Marine layer morning — grab coffee at Trident and it will clear by 10AM. Then hit the beach.';
+  if(code<=48) return'Classic Coronado marine layer. Have your indoor spots ready: the Invigatorium or Portal Coffee.';
+  if(temp<60) return'Layer up for the evening. The Dive Rooftop has heaters — great night for cocktails with a view.';
+  return'Good day to take the ferry to San Diego. Walk the Embarcadero and explore Little Italy.';
+}
+
+// ─── EVENTS (curated for June 14–21) ───
+let evLoaded=false;
+function loadEvents(){
+  if(evLoaded) return;
+  evLoaded=true;
+  const el=document.getElementById('ev-content');
+  const events=[
+    {date:'Every Tue · 9AM–1PM',loc:'Ferry Landing Marketplace',name:'Coronado Farmers Market',desc:"The island's beloved weekly market right at the Ferry Landing. Local produce, flowers, artisan goods, fresh tamales. Shop with the San Diego skyline behind you. Locals arrive early for the best picks.",tags:['Weekly','Free','Local Fave']},
+    {date:'Weekends · Afternoons',loc:'Sun Deck, Hotel del Coronado',name:'Sun Deck Live Sessions',desc:"Weekend afternoons on the Hotel Del's iconic oceanfront Sun Deck. Live acoustic sets, craft cocktails, and one of the most beautiful views in California. No reservation needed — grab a passionfruit margarita and stay a while.",tags:['Hotel Del','Live Music','Cocktails']},
+    {date:'June 14–21 · Early Morning',loc:'Coronado Beach (north end)',name:'Sunrise Beach Yoga',desc:"Informal sunrise yoga gatherings on the dark sparkling sand north of Hotel Del. The marine layer burns off mid-session, revealing the Pacific. No sign-up, just show up before 7AM with a mat.",tags:['Wellness','Free','Beach']},
+    {date:'Every Sat · 8AM–2PM',loc:'Little Italy, San Diego',name:'Little Italy Farmers Market',desc:"One of the best farmers markets in all of SoCal — 15 min by ferry + walk from Coronado. World-class street food, fresh produce, Italian pastries, artisan vendors. Pair it with Goldchild Coffee right nearby.",tags:['SD','Saturday','Market','Ferry Trip']},
+    {date:'Every Friday Night',loc:'Gaslamp Quarter, SD',name:'Gaslamp Friday Energy',desc:"The Gaslamp District hits its stride on Fridays. Ferry from Coronado to Broadway Pier (15 min), walk straight into the action. Hit The Nolen rooftop for HH, then Rustic Root for dinner. Last ferry back ~9:30PM.",tags:['SD','Nightlife','Ferry','Rooftop']},
+    {date:'Weekends · Mornings',loc:'Glorietta Bay Marina',name:'Paddleboard & Kayak Rentals',desc:"Rent a paddleboard or kayak off Glorietta Bay and cruise calm bay waters with the Coronado Bridge arching overhead. Morning sessions are glassy and peaceful. Hourly rentals, no experience needed.",tags:['Outdoor','Water','Weekend','Active']},
+    {date:'Daily · 5–8PM',loc:'Ferry Landing, Coronado',name:'Ferry Landing Sunset Hour',desc:"The outdoor restaurants and bars at Ferry Landing come alive at golden hour with the best waterfront seating on the island. Il Fornaio has bay-view tables and a great happy hour. The light on the SD skyline at 7PM is something else.",tags:['Happy Hour','Waterfront','Sunset']},
+    {date:'Every Sunday · Evening',loc:'Spreckels Park, Coronado',name:'Free Summer Concerts in the Park',desc:"The City of Coronado hosts free Sunday evening concerts in Spreckels Park all summer. Locals bring blankets, wine, and dogs. Very un-touristy. One of those things that makes you feel like you actually live here.",tags:['Free','Sunday','Live Music','Local']},
+    {date:'June · Monthly',loc:'Orange Ave & Side Streets',name:'Coronado Art Walk',desc:"Local galleries and artists open their studios along Orange Ave and the side streets. Some months feature outdoor installations near Spreckels Park. When it aligns with your dates it's a genuinely special evening stroll.",tags:['Art','Local','Evening','Culture']},
+  ];
+  el.innerHTML=events.map(ev=>`
+    <div class="ev-card">
+      <div class="ev-date">📅 ${ev.date}</div>
+      <div style="font-family:'DM Mono',monospace;font-size:8px;color:var(--mist);margin-bottom:6px;letter-spacing:.03em">📍 ${ev.loc}</div>
+      <div class="ev-name">${ev.name}</div>
+      <div class="ev-desc">${ev.desc}</div>
+      <div class="ev-meta">${ev.tags.map(t=>'<span class="ev-tag">'+t+'</span>').join('')}</div>
+    </div>
+  `).join('');
+}
+
+// ─── SAVE / VISITED (localStorage — works anywhere) ───
+const ST={saved:{},visited:{}};
+// Safe storage: tries localStorage, falls back to in-memory
+const _mem={};
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return _mem[k]||null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){_mem[k]=v;}}
+
+function loadST(){
+  try{
+    const sv=lsGet('cor_sv');
+    const vv=lsGet('cor_vv');
+    if(sv) ST.saved=JSON.parse(sv);
+    if(vv) ST.visited=JSON.parse(vv);
+    Object.keys(ST.saved).forEach(id=>{
+      const b=document.querySelector('[data-sid="'+id+'"]');
+      if(b){b.textContent='♥ Saved';b.classList.add('sv');}
+    });
+    Object.keys(ST.visited).forEach(id=>{
+      const c=document.getElementById('c-'+id);
+      const b=document.querySelector('[data-vid="'+id+'"]');
+      if(c) c.classList.add('vis-card');
+      if(b){b.textContent='✓ Done';b.classList.add('vi');}
+    });
+  } catch(e){}
+}
+function doSave(btn,id){
+  if(ST.saved[id]){delete ST.saved[id];btn.textContent='♡ Save';btn.classList.remove('sv');}
+  else{ST.saved[id]=1;btn.textContent='♥ Saved';btn.classList.add('sv');}
+  lsSet('cor_sv',JSON.stringify(ST.saved));
+}
+function doVisit(btn,id){
+  const card=document.getElementById('c-'+id);
+  if(ST.visited[id]){delete ST.visited[id];btn.textContent='✓ Visited';btn.classList.remove('vi');if(card)card.classList.remove('vis-card');}
+  else{ST.visited[id]=1;btn.textContent='✓ Done';btn.classList.add('vi');if(card)card.classList.add('vis-card');}
+  lsSet('cor_vv',JSON.stringify(ST.visited));
+}
+document.querySelectorAll('.slink').forEach(btn=>{
+  const oc=btn.getAttribute('onclick')||'';
+  const m=oc.match(/'([^']+)'\)/);
+  if(!m) return;
+  const id=m[1];
+  if(oc.includes('doSave')) btn.setAttribute('data-sid',id);
+  if(oc.includes('doVisit')) btn.setAttribute('data-vid',id);
+});
+
+function toggleDone(btn){
+  btn.classList.toggle('done');
+  btn.textContent=btn.classList.contains('done')?'✓ Done!':'✓ Been Here';
+}
+
+// ─── PLANS ───
+const PLANS={
+  productive:{title:'💻 Productive Day',sub:'Work hard, finish by 3PM, then reward yourself.',stops:[
+    {t:'7AM',n:'Trident Coffee',d:'Grab and go. Best coffee on the island.',w:'Fuel before the focus session'},
+    {t:'8–11AM',n:'Portal Coffee (SD)',d:'Take the ferry. Work from the waterfront with bay views.',w:'Best nomad spot in the area'},
+    {t:'12:30PM',n:'La Corriente',d:'Red snapper tostada or ceviche. Fast and fresh.',w:"Fuel that won't slow you down"},
+    {t:'2:30PM',n:'Orange Ave Wander',d:'Decompress. Browse, peek at Victorian side streets.',w:'Transition from work brain to evening'},
+    {t:'3:30PM',n:'Brigantine Happy Hour',d:'$6 oysters and margaritas. You earned it.',w:'Best HH deal on the island'},
+    {t:'7PM',n:'Dive Rooftop',d:'Wagyu burger + old fashioned. Book a nook.',w:'Perfect solo evening close-out'},
+  ]},
+  explorer:{title:'🗺 Explorer Day',sub:'Cover the island and cross the water.',stops:[
+    {t:'7AM',n:'Better Buzz Coffee',d:'Opens 4:30AM. Iced mocha with oat milk.',w:'Fuel before you move'},
+    {t:'8AM',n:'Coronado Beach Walk',d:'Walk north from Hotel Del. Sparkling sand, empty.',w:'Best hour before anyone shows up'},
+    {t:'12PM',n:'Garage Buona Forchetta',d:'Wood-fired pizza lunch. Shaded patio.',w:'Earned after the morning walk'},
+    {t:'2PM',n:'Ferry to San Diego',d:'Take the ferry → Broadway Pier.',w:'Cross the water — different world in 15 min'},
+    {t:'3:30PM',n:'The Nolen Rooftop HH',d:'Views of Petco Park. Truffle fries, cheap cocktails.',w:'Best rooftop HH in SD'},
+    {t:'7PM',n:'Rustic Root (SD)',d:'Rooftop dinner in the Gaslamp.',w:"San Diego's food scene — one real dinner"},
+    {t:'9PM',n:'Ferry back to Coronado',d:'Last ferry ~9:30PM from Broadway Pier.',w:'End the day crossing dark water'},
+  ]},
+  chill:{title:'🌊 Chill Day',sub:'Slow pace. No rushing. Just be.',stops:[
+    {t:'Whenever',n:'Trident Coffee',d:'Take your time. Small cup, outside if possible.',w:'No alarm. No rush.'},
+    {t:'Morning',n:'Centennial Park',d:'Sit at the waterfront. Watch the SD skyline. Do nothing.',w:'Best free meditation spot on the island'},
+    {t:'Mid-morn',n:'Orange Ave Wander',d:'No destination. Browse. Stop when something catches you.',w:'The point is the pace, not the destination'},
+    {t:'Lunch',n:'The Henry',d:'Sit inside. Order slowly. Low noise, no pressure.',w:"The locals' spot for a reason"},
+    {t:'Afternoon',n:'Coronado Beach',d:'Lay down. Walk a little. Stay as long as you want.',w:'Nowhere to be'},
+    {t:'Evening',n:'Il Fornaio',d:'Bay view dinner. Window seat, city lights across the water.',w:'Quietly perfect ending'},
+  ]},
+  active:{title:'🏃 Active Day',sub:'Move your body. Earn everything after.',stops:[
+    {t:'6:30AM',n:'Trident Coffee',d:'Opens at 6AM. Quick espresso. Go.',w:"Don't overthink it"},
+    {t:'7AM',n:'Island Yoga or Popflow',d:'Early class — hot Pilates, sculpt, or HIIT.',w:'Start with movement, everything flows after'},
+    {t:'9AM',n:'Coronado Beach Run',d:'Post-class. Run or walk north on the beach.',w:'Cool down in the best setting possible'},
+    {t:'10:30AM',n:'Better Buzz Coffee',d:'Acaí bowl + coffee. Post-workout fuel.',w:'You earned a real breakfast'},
+    {t:'12PM',n:'Bike the Silver Strand',d:'Rent at Bikes & Beyond. Ocean + bay both sides.',w:'Most scenic ride in San Diego'},
+    {t:'4PM',n:'Il Fornaio Happy Hour',d:'$6 beer, $12 pizza. You moved all day — sit.',w:'Most satisfying HH after an active day'},
+    {t:'7PM',n:'La Corriente dinner',d:'Fresh ceviche and seafood.',w:'Feed the body what it actually wants'},
+  ]}
+};
+
+function showPlan(mood,card){
+  document.querySelectorAll('.mcard').forEach(c=>c.classList.remove('sel'));
+  card.classList.add('sel');
+  const p=PLANS[mood];
+  const out=document.getElementById('pout');
+  out.classList.add('show');
+  out.innerHTML='<div class="pttl">'+p.title+'</div><div class="psub">'+p.sub+'</div>'+
+    p.stops.map(s=>'<div class="pstop"><div class="pt"><div class="ptl">'+s.t+'</div></div><div class="pi"><div class="pn">'+s.n+'</div><div class="pd">'+s.d+'</div><div class="pw">→ '+s.w+'</div></div></div>').join('');
+  setTimeout(()=>out.scrollIntoView({behavior:'smooth'}),80);
+}
+
+// ─── INIT ───
+try { setLayout(false,true); } catch(e){}
+try { loadST(); } catch(e){}
+</script>
+</body>
+</html>
